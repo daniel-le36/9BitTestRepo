@@ -9,10 +9,13 @@ class BootStrap {
     }
     def destroy = {
     }
+    def newTransaction(userAmount, userCategory, userDate) {
+        def transaction = new Transaction(amount: userAmount, category: userCategory, date: userDate)
+        transaction.save()
+    }
 
     def createSaveAccount(name, password, firstStatus){
         def account = new UserAccount(userName: name, password: password)
-        def profile = new Profile(ownerAccount: account).save()
         new StatusPost(statusText:firstStatus, ownerProfile: profile).save()
     }
 }
