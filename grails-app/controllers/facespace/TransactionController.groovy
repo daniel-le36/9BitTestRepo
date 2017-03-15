@@ -11,18 +11,30 @@ class TransactionController extends RestfulController{
     }
     //for fetch also
     def addTransaction(){
-        def uAmount = params.amount
-        def uCategory = params.category
-        def uDate = params.date
+        String uAmount = params.amount
+        String uCategory = params.category
+        String uDate = params.date
+        UserAccount userAcc = UserAccount.findByUserName("bun")
+        if(userAcc != null){
+            Transaction newTran = new Transaction(sourceProfile: userAcc, amounts: uAmount, categorys: uCategory, dates: uDate)
+            userAcc.addToTransactions(newTran).save(flush: true)
+            System.out.println(userAcc.getTransactions().size())
+            response.status = 200
+        }
+        else{
+            response.status = 404
+        }
+        /*
         new Transaction(amount: uAmount, category: uCategory, date: uDate).save()
         System.out.print("Transaction added")
         def trans = Transaction.get(1)
         if(trans == null){
+            System.out.println(Transaction.count())
             response.status = 404
         }
         else{
             response.status = 200
-        }
+        }*/
 
         //check that username exists and if it's not null then add a new transaction
         //def account = UserAccount.find{userName == uname}
