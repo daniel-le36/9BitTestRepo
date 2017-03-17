@@ -34,7 +34,7 @@ class AccountsController extends RestfulController{
         if((uname=="bob") && (password=="123")){
             UserAccount acc = new UserAccount(userName: "bun", password: "234").save()
             if(acc == null){
-                System.out.println("nnull")
+                System.out.println("null")
             }
             else{
                 System.out.println(UserAccount.count())
